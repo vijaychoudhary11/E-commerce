@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+</head>
+<body>
+
+<h1>Add Product</h1>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <input
+        type="text"
+        name="name"
+        placeholder="Product Name"
+        required
+    >
+
+    <br><br>
+
+    <input
+        type="text"
+        name="slug"
+        placeholder="product-slug"
+        required
+    >
+
+    <br><br>
+
+    <select name="category_id" required>
+
+        <option value="">
+            Select Category
+        </option>
+
+        {% for category in categories %}
+
+        <option value="{{ category.id }}">
+            {{ category.name }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <input
+        type="number"
+        step="0.01"
+        name="price"
+        placeholder="Price"
+        required
+    >
+
+    <br><br>
+
+    <input
+        type="number"
+        name="stock"
+        placeholder="Stock"
+        required
+    >
+
+    <br><br>
+
+    <textarea
+        name="description"
+        placeholder="Description">
+    </textarea>
+
+    <br><br>
+<label for="product image">product image</label>
+<br><br>
+
+<input type="file" name="image" accept="image/*">
+
+<br><br>
+
+<label>Product Image</label>
+
+<br><br>
+
+<input
+    type="file"
+    name="image"
+    accept="image/*"
+>
+
+<label>Stock</label>
+
+<input
+type="number"
+name="stock"
+required
+min="0"
+>
+
+    <button type="submit">
+        Save Product
+    </button>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<h2>My Orders</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Order No</th>
+        <th>Amount</th>
+        <th>Status</th>
+    </tr>
+
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.order_number }}</td>
+        <td>₹{{ order.grand_total }}</td>
+        <td>{{ order.order_status }}</td>
+    </tr>
+    {% endfor %}
+</table>

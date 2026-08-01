@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Payment</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+<script>
+
+var options = {
+
+    "key": "{{ razorpay_key }}",
+
+    "amount": "{{ amount }}",
+
+    "currency": "INR",
+
+    "name": "Fashion Store",
+
+    "description": "Order Payment",
+
+    "order_id": "{{ razorpay_order_id }}",
+
+    "handler": function (response) {
+
+        var form = document.createElement("form");
+
+        form.method = "POST";
+
+        form.action = "{{ url_for('cart.payment_success') }}";
+
+        function addField(name, value){
+
+            var input = document.createElement("input");
+
+            input.type = "hidden";
+
+            input.name = name;
+
+            input.value = value;
+
+            form.appendChild(input);
+        }
+
+        addField("razorpay_payment_id", response.razorpay_payment_id);
+
+        addField("razorpay_order_id", response.razorpay_order_id);
+
+        addField("razorpay_signature", response.razorpay_signature);
+
+        document.body.appendChild(form);
+
+        form.submit();
+    },
+
+    "theme": {
+        "color": "#198754"
+    }
+
+};
+
+var rzp = new Razorpay(options);
+
+rzp.open();
+
+rzp.on("payment.failed", function () {
+
+    alert("Payment Failed!");
+
+    window.location.href = "{{ url_for('cart.payment') }}";
+
+});
+
+</script>
+
+</body>
+
+</html>

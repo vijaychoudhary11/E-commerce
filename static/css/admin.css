@@ -1,0 +1,130 @@
+body{
+    margin: 0;
+    background: #f5f7fb;
+}
+
+
+.sidebar{
+    position: fixed;
+    left:0;
+    top:0;
+    width:260px;
+    height:100vh;
+    background:#1e293b;
+    color: white;
+    padding-top:20px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sidebar .logo{
+    color:white;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+}
+
+.sidebar a:hover{
+    background:#334155;
+}
+
+.main-content{
+    margin-left:260px;
+    padding:30px;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    margin:5px 10px;
+    border-radius:8px;
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+    background:#2563eb;
+    transform:translateX(5px);
+}
+
+.sidebar a.active{
+    background:#2563eb;
+}
+
+.sidebar-footer{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+/* ===========================
+   Responsive Admin Panel
+=========================== */
+
+.menu-toggle{
+    display:none;
+}
+
+@media (max-width:991px){
+
+    .sidebar{
+        position:fixed;
+        left:-260px;
+        top:0;
+        width:260px;
+        height:100vh;
+        transition:0.3s;
+        z-index:2000;
+    }
+
+    .sidebar.active{
+        left:0;
+    }
+
+    .main-content{
+        margin-left:0 !important;
+        padding:15px;
+        width:100%;
+    }
+
+    .menu-toggle{
+        display:inline-block;
+        position:fixed;
+        top:15px;
+        left:15px;
+        z-index:2100;
+        background:#0d6efd;
+        color:#fff;
+        border:none;
+        border-radius:8px;
+        padding:8px 12px;
+        font-size:20px;
+        cursor:pointer;
+    }
+
+    .table-responsive{
+        overflow-x:auto;
+    }
+
+    table{
+        min-width:700px;
+    }
+
+    .card{
+        margin-bottom:15px;
+    }
+
+    img{
+        max-width:100%;
+        height:auto;
+    }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Details</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body style="background:#f4f6f9;">
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        👤 Customer Details
+    </h2>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4>{{ customer.customer_name }}</h4>
+
+            <hr>
+
+            <p>
+                <strong>Email:</strong>
+                {{ customer.customer_email }}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                {{ customer.customer_phone }}
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                {{ customer.address }}
+            </p>
+
+            <p>
+                <strong>City:</strong>
+                {{ customer.city }}
+            </p>
+
+            <p>
+                <strong>State:</strong>
+                {{ customer.state }}
+            </p>
+
+            <p>
+                <strong>Pincode:</strong>
+                {{ customer.pincode }}
+            </p>
+
+            <hr>
+
+            <p>
+                <strong>Order Number:</strong>
+                {{ customer.order_number }}
+            </p>
+
+            <p>
+                <strong>Total Amount:</strong>
+                ₹{{ customer.grand_total }}
+            </p>
+
+            <p>
+                <strong>Payment Method:</strong>
+                {{ customer.payment_method }}
+            </p>
+
+            <p>
+                <strong>Order Status:</strong>
+                {{ customer.order_status }}
+            </p>
+
+            <a href="/admin/customers"
+               class="btn btn-secondary">
+               Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+<div class="container">
+
+<a class="navbar-brand fw-bold" href="/">
+🛍 NITHARWAL STORE
+</a>
+
+<button class="navbar-toggler"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#navbarNav">
+
+<span class="navbar-toggler-icon"></span>
+
+</button>
+
+<div class="collapse navbar-collapse"
+id="navbarNav">
+
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+<a class="nav-link" href="/">Home</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="/cart">
+Cart ({{ session.get('cart',{})|length }})
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="/track-order">
+Track Order
+</a>
+</li>
+
+{% if session.get("customer_id") %}
+
+<li class="nav-item">
+<a class="nav-link"
+href="/customer/profile">
+Profile
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link text-warning"
+href="/customer/logout">
+Logout
+</a>
+</li>
+
+{% else %}
+
+<li class="nav-item">
+<a class="nav-link"
+href="/customer/login">
+Login
+</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link"
+href="/customer/register">
+Register
+</a>
+</li>
+
+{% endif %}
+
+</ul>
+
+</div>
+
+</div>
+
+</nav>

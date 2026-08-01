@@ -1,0 +1,164 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<!-- Dashboard Content Yaha Hoga -->
+
+<div class="container-fluid">
+
+    <h2 class="fw-bold mb-4">
+        📊 Dashboard
+    </h2>
+
+    <div class="row g-4">
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card dashboard-card text-center p-3">
+                <h6>Total Products</h6>
+                <h2 class="text-primary">
+                    {{ total_products }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card dashboard-card text-center p-3">
+                <h6>Total Orders</h6>
+                <h2 class="text-success">
+                    {{ total_orders }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card dashboard-card text-center p-3">
+                <h6>Pending Orders</h6>
+                <h2 class="text-warning">
+                    {{ pending_orders }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card dashboard-card text-center p-3">
+                <h6>Total Revenue</h6>
+                <h2 class="text-danger">
+                    ₹{{ total_revenue }}
+                </h2>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-5">
+
+        <div class="card-header bg-primary text-white">
+            📈 Monthly Revenue Analytics
+        </div>
+
+        <div class="card-body">
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-5">
+
+        <div class="card-header bg-dark text-white">
+            📋 Recent Orders
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Order No</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for order in recent_orders %}
+
+                    <tr>
+
+                        <td>{{ order.order_number }}</td>
+
+                        <td>{{ order.customer_name }}</td>
+
+                        <td>₹{{ order.grand_total }}</td>
+
+                        <td>{{ order.order_status }}</td>
+
+                        <td>
+
+                            <a href="/admin/orders/{{ order.id }}"
+                               class="btn btn-primary btn-sm">
+
+                                View
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('revenueChart');
+
+new Chart(ctx,{
+    type:'bar',
+    data:{
+        labels:{{ months|tojson }},
+        datasets:[{
+            label:'Revenue (₹)',
+            data:{{ sales|tojson }},
+            borderWidth:2
+        }]
+    },
+    options:{
+        responsive:true,
+        scales:{
+            y:{
+                beginAtZero:true
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

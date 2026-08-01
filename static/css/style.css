@@ -1,0 +1,272 @@
+/* ==========================
+   GLOBAL
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f7fb;
+    color:#333;
+}
+
+a{
+    text-decoration:none;
+}
+
+img{
+    max-width:100%;
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+
+.navbar{
+    background:#1e293b;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.navbar-brand{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.navbar-brand,
+.nav-link{
+    color:white !important;
+}
+
+.nav-link{
+    margin-left:10px;
+    transition:.3s;
+}
+
+.nav-link:hover{
+    color:#38bdf8 !important;
+}
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+    background:linear-gradient(135deg,#1e293b,#334155);
+    color:white;
+    border-radius:20px;
+    padding:60px 20px;
+    margin-top:25px;
+    margin-bottom:35px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.hero h1{
+    font-size:42px;
+    font-weight:bold;
+}
+
+.hero p{
+    margin-top:12px;
+    font-size:18px;
+    opacity:.9;
+}
+
+/* ==========================
+   SECTION TITLE
+========================== */
+
+.section-title{
+    text-align:center;
+    font-size:35px;
+    font-weight:bold;
+    margin:40px 0 25px;
+    color:#1e293b;
+}
+
+/* ==========================
+   SEARCH BAR
+========================== */
+
+.search-box{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    margin-bottom:30px;
+}
+
+/* ==========================
+   PRODUCT CARD
+========================== */
+
+.product-card{
+    border:none;
+    border-radius:18px;
+    overflow:hidden;
+    background:white;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    transition:.3s;
+    margin-bottom:30px;
+}
+
+.product-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 25px rgba(0,0,0,.18);
+}
+
+.product-card img{
+    height:260px;
+    width:100%;
+    object-fit:cover;
+    transition:.4s;
+}
+
+.product-card:hover img{
+    transform:scale(1.05);
+}
+
+.product-body{
+    padding:18px;
+    text-align:center;
+}
+
+.product-title{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.price{
+    color:#16a34a;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.rating{
+    color:#f59e0b;
+    margin:10px 0;
+}
+
+/* ==========================
+   STOCK BADGES
+========================== */
+
+.stock-badge{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    color:white;
+    margin-bottom:15px;
+}
+
+.in-stock{
+    background:#16a34a;
+}
+
+.low-stock{
+    background:#f59e0b;
+}
+
+.out-stock{
+    background:#dc2626;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+.btn-cart{
+    width:100%;
+    border-radius:10px;
+    padding:10px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn-cart:hover{
+    transform:translateY(-2px);
+}
+
+/* ==========================
+   TOP SELLING
+========================== */
+
+.top-selling{
+    margin-top:60px;
+}
+
+.top-selling h2{
+    text-align:center;
+    margin-bottom:30px;
+    font-weight:bold;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+    margin-top:70px;
+    background:#1e293b;
+    color:white;
+    text-align:center;
+    padding:35px 15px;
+}
+
+footer h4{
+    margin-bottom:10px;
+}
+
+/* ==========================
+   UTILITIES
+========================== */
+
+.shadow-card{
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.rounded-xl{
+    border-radius:18px;
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:30px;
+}
+
+.hero p{
+    font-size:15px;
+}
+
+.section-title{
+    font-size:28px;
+}
+
+.product-card img{
+    height:220px;
+}
+
+.price{
+    font-size:24px;
+}
+
+.navbar-brand{
+    font-size:20px;
+}
+
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Orders</title>
+</head>
+<body>
+
+    <h2>My Orders</h2>
+
+    {% if orders %}
+
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Order Number</th>
+            <th>Total</th>
+            <th>Status</th>
+        </tr>
+
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.order_number }}</td>
+            <td>₹{{ order.grand_total }}</td>
+            <td>{{ order.order_status }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <p>No Orders Found</p>
+
+    {% endif %}
+
+    <footer class="bg-dark text-white text-center p-3 mt-5">
+
+    © 2026 NITHARWAL STORE by Kamlesh Nitharwal
+    <br>
+    Designed by Vijay Nitharwal
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}NITHARWAL STORE{% endblock %}
+
+{% block content %}
+
+<style>
+
+.hero-banner{
+    background:#212529;
+    color:#fff;
+    border-radius:15px;
+    padding:50px 20px;
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+    overflow:hidden;
+    transition:.3s;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card img{
+    height:280px;
+    object-fit:cover;
+}
+
+.price{
+    color:#198754;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.rating{
+    color:#f39c12;
+}
+
+@media(max-width:768px){
+
+    .hero-banner{
+        padding:30px 15px;
+    }
+
+    .hero-banner h1{
+        font-size:30px;
+    }
+
+    .card img{
+        height:230px;
+    }
+
+}
+
+</style>
+
+<div class="hero-banner text-center mb-5">
+
+    <h1 class="fw-bold">
+        🛍️ NITHARWAL STORE
+    </h1>
+
+    <p class="mb-0">
+        Discover the latest fashion trends
+    </p>
+
+</div>
+
+<h2 class="text-center text-danger fw-bold mb-4">
+    Products
+</h2>
+
+<form method="GET" class="row g-3 mb-4">
+
+    <div class="col-12 col-md-5">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search products"
+            value="{{ request.args.get('search','') }}">
+
+    </div>
+
+    <div class="col-12 col-md-4">
+
+        <select
+            name="category"
+            class="form-select">
+
+            <option value="">
+                All Categories
+            </option>
+
+            {% for category in categories %}
+
+            <option
+                value="{{ category.id }}"
+                {% if request.args.get("category")==category.id|string %}
+                selected
+                {% endif %}>
+
+                {{ category.name }}
+
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+    <div class="col-12 col-md-3">
+
+        <button
+            class="btn btn-primary w-100"
+            type="submit">
+
+            Search
+
+        </button>
+
+    </div>
+
+</form>
+
+<div class="row g-4">
+
+{% for product in products %}
+
+<div class="col-12 col-sm-6 col-lg-4 mb-4">
+
+<div class="card product-card-h-100">
+
+{% if product.image_1 %}
+
+<img
+src="{{ url_for('static', filename='uploads/products/' + product.image_1) }}"
+class="card-img-top">
+
+{% else %}
+
+<div
+class="d-flex justify-content-center align-items-center bg-light"
+style="height:280px;">
+
+No Image
+
+</div>
+
+{% endif %}
+
+<div class="card-body text-center product-body">
+
+<h4 class="fw-bold product-title">
+
+<a
+href="{{ url_for('product_detail', id=product.id) }}"
+class="text-decoration-none text-dark">
+
+{{ product.name }}
+
+</a>
+
+</h4>
+
+<p class="rating">
+
+⭐ {{ product.average_rating }}/5
+
+</p>
+
+<div class="price mb-2">
+
+₹{{ product.price }}
+
+</div>
+
+<p>
+
+{% if product.stock > 5 %}
+
+{% if product.stock > 0 %}
+
+<span class="badge bg-success">
+    In Stock
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+    Out of Stock
+</span>
+
+{% endif %}
+
+{% else %}
+
+<span class="badge bg-danger">
+
+Low Stock
+
+</span>
+
+{% endif %}
+
+</p>
+
+</div>
+
+<div class="card-footer bg-white border-0">
+
+    {% if product.stock > 0 %}
+
+<a href="{{ url_for('cart.add_to_cart', product_id=product.id) }}"
+   class="btn btn-success btn-cart w-100">
+    Add to Cart
+</a>
+
+{% else %}
+
+<button class="btn btn-danger btn-cart w-100" disabled>
+    Out of Stock
+</button>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% if products|length == 0 %}
+
+<div class="alert alert-warning text-center rounded-4 shadow-sm p-4">
+    <h4>😕 No Products Found</h4>
+    <p class="mb-0">
+        Try searching with another keyword or category.
+    </p>
+</div>
+
+{% endif %}
+
+<footer class="bg-dark text-white text-center py-5 mt-5 rounded-4 shadow">
+
+    <h5 class="mb-2">
+        NITHARWAL STORE
+    </h5>
+
+    <p class="mb-1">
+        Discover the latest fashion trends
+    </p>
+
+    <small>
+        © 2026 NITHARWAL STORE <br>
+        Designed and developed by Vijay Nitharwal
+    </small>
+
+</footer>
+
+{% endblock %}

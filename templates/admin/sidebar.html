@@ -1,0 +1,51 @@
+<button class="menu-toggle" id="menuToggle">
+    ☰
+</button>
+
+<div class="sidebar" id="sidebar">
+
+    <h4 class="logo">🛍️ KAMLESH NITHARWAL</h4>
+
+    <a href="{{ url_for('admin.dashboard') }}">📊 Dashboard</a>
+    <a href="{{ url_for('admin.products') }}">📦 Products</a>
+    <a href="{{ url_for('admin.orders') }}">🛒 Orders</a>
+    <a href="{{ url_for('admin.customers') }}">👥 Customers</a>
+    <a href="{{ url_for('admin.reports') }}">📈 Reports</a>
+    <a href="{{ url_for('admin.categories') }}">🗂 Categories</a>
+    <a href="{{ url_for('admin.reviews') }}">⭐ Reviews</a>
+    <a href="{{ url_for('admin.logout') }}">🚪 Logout</a>
+
+    <div class="sidebar-footer">
+        KAMLESH NITHARWAL v1.0
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuBtn = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+
+    if (menuBtn && sidebar) {
+
+        menuBtn.onclick = function () {
+            sidebar.classList.toggle("active");
+        };
+
+        document.querySelectorAll(".sidebar a").forEach(function(link){
+
+            link.onclick = function(){
+
+                if(window.innerWidth <= 991){
+                    sidebar.classList.remove("active");
+                }
+
+            };
+
+        });
+
+    }
+
+});
+</script>
