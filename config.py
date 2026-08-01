@@ -3,9 +3,14 @@ import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    SECRET_KEY = "fashion-store-secret-key"
 
-    SQLALCHEMY_DATABASE_URI = (
+    SECRET_KEY = os.environ.get(
+        "SECRET_KEY",
+        "fashion-store-secret-key"
+    )
+
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        "DATABASE_URL",
         f"sqlite:///{os.path.join(BASE_DIR, 'database', 'store.db')}"
     )
 
@@ -18,6 +23,10 @@ class Config:
         "products"
     )
 
-    # Razorpay
-    RAZORPAY_KEY_ID = "rzp_test_TIusKMufjjLQf0"
-    RAZORPAY_KEY_SECRET = "hG50JJkG7xamxpoN4UapaISc"
+    RAZORPAY_KEY_ID = os.environ.get(
+        "RAZORPAY_KEY_ID"
+    )
+
+    RAZORPAY_KEY_SECRET = os.environ.get(
+        "RAZORPAY_KEY_SECRET"
+    )
