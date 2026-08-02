@@ -327,3 +327,30 @@ body{
         padding:8px;
     }
 }
+
+.star-rating{
+    display:flex;
+    flex-direction:row-reverse;
+    justify-content:flex-end;
+    gap:6px;
+}
+
+.star-rating input{
+    display:none;
+}
+
+.star-rating label{
+    font-size:38px;
+    color:#d1d5db;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label{
+    color:#ffc107;
+}
+
+.star-rating input:checked ~ label{
+    color:#ffc107;
+}
