@@ -3,139 +3,277 @@
 <head>
     <title>{{ product.name }}</title>
 
-    <h1>{{ product.name }}</h1>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+    body{
+        background:#f5f7fb;
+    }
+
+    .product-card{
+        background:#fff;
+        border-radius:18px;
+        padding:20px;
+        box-shadow:0 5px 15px rgba(0,0,0,.1);
+    }
+
+    .product-image{
+        width:100%;
+        height:500px;
+        object-fit:cover;
+        border-radius:15px;
+    }
+
+    .price{
+        color:#198754;
+        font-size:32px;
+        font-weight:bold;
+    }
+
+    .rating{
+        color:#f39c12;
+        font-size:18px;
+    }
+
+    .btn-cart{
+        width:100%;
+        padding:12px;
+        font-size:18px;
+        font-weight:bold;
+        border-radius:10px;
+    }
+
+    textarea{
+        width:100%;
+        min-height:120px;
+        border-radius:10px;
+        padding:10px;
+    }
+
+    input[type="number"]{
+        width:100%;
+        border-radius:10px;
+        padding:10px;
+    }
+
+    @media(max-width:768px){
+
+        .product-image{
+            height:400px;
+        }
+
+        h1{
+            font-size:28px;
+            margin-top:20px;
+        }
+
+        .price{
+            font-size:28px;
+        }
+
+        .btn-cart{
+            margin-bottom:10px;
+        }
+
+    }
+
+    </style>
+
 </head>
+
 <body>
 
-<div class="container mt-5">
+<div class="container py-4">
 
-    <div class="row">
+<div class="product-card">
 
-        <div class="col-md-6">
+<div class="row">
 
-            {% if product.image_1 %}
-            <img src="{{ url_for('static', filename='uploads/products/' + product.image_1) }}"
-                 class="img-fluid rounded border">
-            {% endif %}
+<div class="col-12 col-md-6 mb-4">
 
-        </div>
+{% if product.image_1 %}
 
-        <div class="col-md-6">
+<img
+src="{{ url_for('static', filename='uploads/products/' + product.image_1) }}"
+class="product-image">
 
-            <h1>{{ product.name }}</h1>
+{% endif %}
 
-            <h3 class="text-success">
-                ₹{{ product.price }}
-            </h3>
+</div>
 
-    <p>
-        ⭐ {{ product.average_rating }}/5
-        ({{ product.reviews|length }} Reviews)
-    </p>
+<div class="col-12 col-md-6">
 
-            <p>
-                <strong>Stock:</strong>
-                {{ product.stock }}
-            </p>
+<h2 class="fw-bold">
+{{ product.name }}
+</h2>
 
-            <hr>
+<p class="price">
+₹{{ product.price }}
+</p>
 
-            <h5>Description</h5>
+<p class="rating">
+⭐ {{ product.average_rating }}/5
+({{ product.reviews|length }} Reviews)
+</p>
 
-            <p>
-                {{ product.description }}
-            </p>
+<p>
+<strong>Stock:</strong>
+{{ product.stock }}
+</p>
 
-            {% if product.stock > 0 %}
+<hr>
 
-<a href="{{ url_for('cart.add_to_cart', product_id=product.id) }}"
-   class="btn btn-success w-100">
-    Add to Cart
+<h5>Description</h5>
+
+<p>
+{{ product.description }}
+</p>
+
+{% if product.stock > 0 %}
+
+<a
+href="{{ url_for('cart.add_to_cart', product_id=product.id) }}"
+class="btn btn-success btn-cart">
+🛒 Add to Cart
 </a>
 
 {% else %}
 
-<button class="btn btn-danger w-100" disabled>
-    Out of Stock
+<button
+class="btn btn-danger btn-cart"
+disabled>
+Out of Stock
 </button>
 
 {% endif %}
 
-            <a href="/"
-               class="btn btn-secondary">
-               Back
-            </a>
-
-            <hr>
-
-<h3>Write Review</h3>
-
-<form method="POST"
-      action="/review/{{ product.id }}">
-
-    <p>Rating (1-5)</p>
-
-    <input
-        type="number"
-        name="rating"
-        min="1"
-        max="5"
-        required
-    >
-
-    <p>Comment</p>
-
-    <textarea
-        name="comment"
-        required
-    ></textarea>
-
-    <br><br>
-
-    <button type="submit">
-        Submit Review
-    </button>
-
-</form>
+<a
+href="/"
+class="btn btn-secondary btn-cart">
+⬅ Back
+</a>
 
 <hr>
 
-<h3>Customer Reviews</h3>
+<h3 class="mt-4">
+Write Review
+</h3>
 
-{% for review in reviews %}
+<form
+method="POST"
+action="/review/{{ product.id }}">
 
-<p>
-    <b>{{ review.user.name }}</b>
-</p>
+<div class="mb-3">
 
-<p>
-    ⭐ {{ review.rating }}/5
-</p>
+<label class="form-label">
+Rating (1-5)
+</label>
 
-<p>
-    {{ review.comment }}
-</p>
-
-<hr>
-
-{% endfor %}
-
-        </div>
-
-    </div>
+<input
+type="number"
+name="rating"
+min="1"
+max="5"
+class="form-control"
+required>
 
 </div>
 
-<footer class="bg-dark text-white text-center p-3 mt-5">
+<div class="mb-3">
 
-    © 2026 NITHARWAL STORE by Kamlesh Nitharwal
-    <br>
-    Designed by Vijay Nitharwal
+<label class="form-label">
+Comment
+</label>
+
+<textarea
+name="comment"
+class="form-control"
+required></textarea>
+
+</div>
+
+<button
+type="submit"
+class="btn btn-primary btn-cart">
+
+Submit Review
+
+</button>
+
+</form>
+
+<hr class="my-4">
+
+<h3 class="mb-4">
+Customer Reviews
+</h3>
+
+{% if reviews %}
+
+{% for review in reviews %}
+
+<div class="card mb-3 shadow-sm">
+
+<div class="card-body">
+
+<h5 class="mb-1">
+{{ review.user.name }}
+</h5>
+
+<p class="text-warning mb-2">
+⭐ {{ review.rating }}/5
+</p>
+
+<p class="mb-0">
+{{ review.comment }}
+</p>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="alert alert-secondary">
+
+No reviews yet.
+Be the first to review this product.
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+
+<h5>
+NITHARWAL STORE
+</h5>
+
+<p class="mb-1">
+Discover the latest fashion trends
+</p>
+
+<small>
+© 2026 NITHARWAL STORE<br>
+Designed and developed by Vijay Nitharwal
+</small>
 
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
