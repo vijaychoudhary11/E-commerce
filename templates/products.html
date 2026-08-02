@@ -4,59 +4,6 @@
 
 {% block content %}
 
-<style>
-
-.hero-banner{
-    background:#212529;
-    color:#fff;
-    border-radius:15px;
-    padding:50px 20px;
-}
-
-.card{
-    border:none;
-    border-radius:15px;
-    overflow:hidden;
-    transition:.3s;
-    box-shadow:0 4px 12px rgba(0,0,0,.1);
-}
-
-.card:hover{
-    transform:translateY(-6px);
-}
-
-.card img{
-    height:280px;
-    object-fit:cover;
-}
-
-.price{
-    color:#198754;
-    font-size:24px;
-    font-weight:bold;
-}
-
-.rating{
-    color:#f39c12;
-}
-
-@media(max-width:768px){
-
-    .hero-banner{
-        padding:30px 15px;
-    }
-
-    .hero-banner h1{
-        font-size:30px;
-    }
-
-    .card img{
-        height:230px;
-    }
-
-}
-
-</style>
 
 <div class="hero-banner text-center mb-5">
 
@@ -135,7 +82,7 @@
 
 <div class="col-6 col-sm-4 col-lg-3 mb-4">
 
-<div class="card h-100 product-card">
+<div class="card product-card">
 
 {% if product.image_1 %}
 
