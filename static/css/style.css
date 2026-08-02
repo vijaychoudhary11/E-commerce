@@ -109,6 +109,7 @@ img{
 ========================== */
 
 .product-card{
+    width: 100%;
     border:none;
     border-radius:18px;
     overflow:hidden;
