@@ -3,95 +3,163 @@
 <head>
     <title>Shopping Cart</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        body{
+            background:#f5f7fb;
+        }
+
+        .cart-card{
+            border-radius:15px;
+            box-shadow:0 3px 12px rgba(0,0,0,.08);
+            margin-bottom:20px;
+        }
+
+        .product-img{
+            width:100px;
+            height:100px;
+            object-fit:cover;
+            border-radius:10px;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-<div class="container mt-5">
+<div class="container py-3">
 
-    <h1 class="mb-4">Shopping Cart</h1>
+<h2 class="text-center mb-4">
+🛒 Shopping Cart
+</h2>
 
-    <table class="table table-bordered table-striped">
+{% if cart_products %}
 
-        <thead class="table-dark">
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+{% for item in cart_products %}
 
-        <tbody>
+<div class="card cart-card">
 
-        {% for item in cart_products %}
+<div class="card-body">
 
-        <tr>
+<div class="row align-items-center">
 
-            <td>{{ item.product.name }}</td>
+<div class="col-4 text-center">
 
-            <td>₹{{ item.product.price }}</td>
+{% if item.product.image_1 %}
 
-            <td>
+<img
+src="{{ item.product.image_1 }}"
+class="product-img">
 
-                <form action="/cart/update/{{ item.product.id }}" method="POST" class="d-flex gap-2">
+{% endif %}
 
-                    <input
-                        type="number"
-                        name="quantity"
-                        value="{{ item.quantity }}"
-                        min="1"
-                        class="form-control"
-                        style="width:100px;"
-                    >
+</div>
 
-                    <button type="submit" class="btn btn-primary">
-                        Update
-                    </button>
+<div class="col-8">
 
-                </form>
+<h5>{{ item.product.name }}</h5>
 
-            </td>
+<p class="mb-1">
+Price :
+<b>₹{{ item.product.price }}</b>
+</p>
 
-            <td>₹{{ item.subtotal }}</td>
+<p class="mb-2">
+Subtotal :
+<b class="text-success">
+₹{{ item.subtotal }}
+</b>
+</p>
 
-            <td>
-                <a href="/cart/remove/{{ item.product.id }}"
-                   class="btn btn-danger btn-sm">
-                    Remove
-                </a>
-            </td>
+<form
+action="/cart/update/{{ item.product.id }}"
+method="POST"
+class="d-flex gap-2 mb-2">
 
-        </tr>
+<input
+type="number"
+name="quantity"
+value="{{ item.quantity }}"
+min="1"
+class="form-control">
 
-        {% endfor %}
+<button
+class="btn btn-primary">
+Update
+</button>
 
-        </tbody>
+</form>
 
-    </table>
+<a
+href="/cart/remove/{{ item.product.id }}"
+class="btn btn-danger btn-sm">
 
-    <div class="text-end">
+Remove
 
-        <h3 class="text-success">
-            Total: ₹{{ total }}
-        </h3>
+</a>
 
-    </div>
+</div>
 
-    <div class="mt-4">
+</div>
 
-        <a href="/"
-           class="btn btn-secondary">
-            Continue Shopping
-        </a>
+</div>
 
-        <a href="/checkout"
-           class="btn btn-success">
-            Checkout
-        </a>
+</div>
 
-    </div>
+{% endfor %}
+
+<div class="text-end mt-4">
+
+<h3 class="text-success">
+
+Total : ₹{{ total }}
+
+</h3>
+
+</div>
+
+<div class="d-grid gap-2 mt-3">
+
+<a
+href="/"
+class="btn btn-secondary">
+
+Continue Shopping
+
+</a>
+
+<a
+href="/checkout"
+class="btn btn-success">
+
+Proceed to Checkout
+
+</a>
+
+</div>
+
+{% else %}
+
+<div class="alert alert-warning text-center">
+
+Your cart is empty.
+
+</div>
+
+<a
+href="/"
+class="btn btn-primary w-100">
+
+Continue Shopping
+
+</a>
+
+{% endif %}
 
 </div>
 
