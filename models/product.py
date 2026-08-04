@@ -49,11 +49,6 @@ class Product(db.Model):
         db.Float
     )
 
-    stock = db.Column(
-        db.Integer,
-        default=0
-    )
-
     featured = db.Column(
         db.Boolean,
         default=False
@@ -81,10 +76,10 @@ class Product(db.Model):
         return round(total / len(self.reviews), 1)
     
  # Product Images
-    image_1 = db.Column(db.String(255))
-    image_2 = db.Column(db.String(255))
-    image_3 = db.Column(db.String(255))
-    image_4 = db.Column(db.String(255))
+    image_1 = db.Column(db.Text)
+    image_2 = db.Column(db.Text)
+    image_3 = db.Column(db.Text)
+    image_4 = db.Column(db.Text)
 
     created_at = db.Column(
         db.DateTime,

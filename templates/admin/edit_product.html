@@ -46,6 +46,23 @@
 
     <br><br>
 
+<div class="mb-3">
+    <label>Category</label>
+
+    <select name="category_id" class="form-control" required>
+
+        {% for category in categories %}
+
+        <option value="{{ category.id }}"
+        {% if product.category_id == category.id %}selected{% endif %}>
+            {{ category.name }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+</div>
+
     <textarea
         name="description"
     >{{ product.description }}</textarea>
@@ -57,7 +74,7 @@
 
     <input
         type="file"
-        name="image_1"
+        name="image"
         class="form-control">
 </div>
 

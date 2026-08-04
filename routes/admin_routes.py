@@ -13,6 +13,20 @@ from models.order import Order
 from models.order_item import OrderItem
 from models.review import Review
 
+import cloudinary
+import cloudinary.uploader
+
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
+    secure=True
+)
+
+print("Cloud:", cloudinary.config().cloud_name)
+print("Key:", cloudinary.config().api_key)
+print("Secret:", cloudinary.config().api_secret)
+
 admin_bp = Blueprint("admin", __name__)
 
 
@@ -276,15 +290,30 @@ def edit_product(id):
         product.slug = request.form.get("slug")
         product.description = request.form.get("description")
         product.price = request.form.get("price")
-        product.stock = request.form.get("stock")
+        product.stock = int(request.form.get("stock", 0))
+        product.category_id = request.form.get("category_id")
+
+        image = request.files.get("image_1")
+
+        if image and image.filename:
+
+            result = cloudinary.uploader.upload(
+                image,
+                folder="products"
+            )
+
+            product.image_1 = result["secure_url"]
 
         db.session.commit()
 
         return redirect(url_for("admin.products"))
 
+    categories = Category.query.all()
+
     return render_template(
         "admin/edit_product.html",
-        product=product
+        product=product,
+        categories=categories
     )
 
 @admin_bp.route("/admin/product/add", methods=["GET", "POST"])
@@ -299,29 +328,29 @@ def add_product():
 
         image = request.files.get("image")
 
-        filename = None
+        image_url = None
 
         if image and image.filename:
-            filename= secure_filename(image.filename)
 
-            image.save(
-                os.path.join(
-                    "static/uploads/products",
-                    filename
-                )
+            result = cloudinary.uploader.upload(
+                image,
+                folder="products"
             )
+
+            image_url = result["secure_url"]
+
+            print("Cloudinary URL:", result["secure_url"])
+            print("Image URL:", image_url)
 
         product = Product(
             name=request.form.get("name"),
             slug=request.form.get("slug"),
             description=request.form.get("description"),
             price=request.form.get("price"),
-            stock = int(request.form.get("stock", 0)),
+            stock=int(request.form.get("stock", 0)),
             category_id=request.form.get("category_id"),
-            image_1=filename
+            image_1=image_url
         )
-
-    
 
         db.session.add(product)
         db.session.commit()

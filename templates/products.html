@@ -87,8 +87,9 @@
 {% if product.image_1 %}
 
 <img
-src="{{ url_for('static', filename='uploads/products/' + product.image_1) }}"
-class="card-img-top">
+src="{{ product.image_1 }}"
+class="card-img-top"
+alt="{{ product.name }}">
 
 {% else %}
 
