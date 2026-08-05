@@ -1,148 +1,384 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Track Order</title>
+<html lang="en">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Track Order</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    background:#f5f7fb;
+    font-family:'Poppins',sans-serif;
+}
+
+.navbar{
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.page-container{
+    max-width:750px;
+    margin:auto;
+    padding:25px 15px 40px;
+}
+
+.track-card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.track-header{
+    background:linear-gradient(135deg,#0d6efd,#2563eb);
+    color:white;
+    text-align:center;
+    padding:28px;
+}
+
+.track-header h2{
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.track-header p{
+    margin:0;
+    opacity:.95;
+}
+
+.track-body{
+    padding:25px;
+}
+
+.form-control{
+    border-radius:12px;
+    height:50px;
+}
+
+.btn-track{
+    height:50px;
+    border-radius:12px;
+    font-weight:600;
+    font-size:17px;
+}
+
+.order-card{
+    margin-top:25px;
+    border:none;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.order-card .card-body{
+    padding:25px;
+}
+
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+}
+
+.detail-title{
+    font-weight:600;
+    color:#555;
+}
+
+.detail-value{
+    font-weight:600;
+}
+
+@media(max-width:768px){
+
+.track-header{
+    padding:22px;
+}
+
+.track-header h2{
+    font-size:26px;
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
 
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            Fashion Store
-        </a>
-    </div>
-</nav>
 
-<div class="container mt-5">
+<div class="container">
 
-    <div class="row justify-content-center">
+<a class="navbar-brand fw-bold" href="/">
 
-        <div class="col-md-6">
+🛍 NITHARWAL STORE
 
-            <div class="card shadow">
-
-                <div class="card-body">
-
-                    <h2 class="text-center mb-4">
-                        Track Your Order
-                    </h2>
-
-                    <form method="POST">
-
-                        <div class="mb-3">
-                            <label class="form-label">
-                                Order Number
-                            </label>
-
-                            <input
-                                type="text"
-                                name="order_number"
-                                class="form-control"
-                                placeholder="Enter Order Number"
-                                required>
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100">
-
-                            Track Order
-
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-
-            {% if order %}
-
-            <div class="card shadow mt-4">
-
-                <div class="card-body">
-
-                    <h4 class="mb-3">
-                        Order Details
-                    </h4>
-
-                    <p>
-                        <strong>Order Number:</strong>
-                        {{ order.order_number }}
-                    </p>
-
-                    <p>
-                        <strong>Customer:</strong>
-                        {{ order.customer_name }}
-                    </p>
-
-                    <p>
-                        <p>
-    <strong>Phone:</strong>
-    {{ order.customer_phone }}
-</p>
-
-<p>
-    <strong>Address:</strong>
-    {{ order.address }}
-</p>
-    
-                    <p>
-                        <strong>Total:</strong>
-                        ₹{{ order.grand_total }}
-                    </p>
-
-                    <p>
-                        <strong>Status:</strong>
-
-                        {% if order.order_status == "Pending" %}
-    <span class="badge bg-warning text-dark">
-        Pending
-    </span>
-
-{% elif order.order_status == "Shipped" %}
-    <span class="badge bg-primary">
-        Shipped
-    </span>
-
-{% elif order.order_status == "Delivered" %}
-    <span class="badge bg-success">
-        Delivered
-    </span>
-
-{% elif order.order_status == "Cancelled" %}
-    <span class="badge bg-danger">
-        Cancelled
-    </span>
-
-{% else %}
-    <span class="badge bg-secondary">
-        {{ order.order_status }}
-    </span>
-{% endif %}
-                    </p>
-
-                </div>
-
-            </div>
-
-            {% endif %}
-
-        </div>
-
-    </div>
+</a>
 
 </div>
 
-<footer class="bg-dark text-white text-center p-3 mt-5">
+</nav>
 
-    © 2026 NITHARWAL STORE
-    <br>
-    Designed by Vijay Nitharwal
+<div class="page-container">
+
+<div class="card track-card">
+
+<div class="track-header">
+
+<h2>
+
+📦 Track Your Order
+
+</h2>
+
+<p>
+
+Enter your Order Number to check the latest status.
+
+</p>
+
+</div>
+
+<div class="track-body">
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label class="form-label fw-bold">
+
+Order Number
+
+</label>
+
+<input
+type="text"
+name="order_number"
+class="form-control"
+placeholder="Enter your Order Number"
+required>
+
+</div>
+
+<button
+type="submit"
+class="btn btn-primary w-100 btn-track">
+
+🔍 Track Order
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+{% if order %}
+
+<div class="card order-card">
+
+<div class="card-body">
+
+<h3 class="mb-4 text-center fw-bold">
+
+📦 Order Details
+
+</h3>
+
+<div class="detail-row">
+
+<span class="detail-title">
+
+Order Number
+
+</span>
+
+<span class="detail-value">
+
+{{ order.order_number }}
+
+</span>
+
+</div>
+
+<div class="detail-row">
+
+<span class="detail-title">
+
+Customer
+
+</span>
+
+<span class="detail-value">
+
+{{ order.customer_name }}
+
+</span>
+
+</div>
+
+<div class="detail-row">
+
+<span class="detail-title">
+
+Phone
+
+</span>
+
+<span class="detail-value">
+
+{{ order.customer_phone }}
+
+</span>
+
+</div>
+
+<div class="detail-row">
+
+<span class="detail-title">
+
+Total Amount
+
+</span>
+
+<span class="detail-value text-success">
+
+₹{{ order.grand_total }}
+
+</span>
+
+</div>
+
+<hr>
+
+<h5 class="fw-bold">
+
+📍 Delivery Address
+
+</h5>
+
+<p class="text-muted mb-4">
+
+{{ order.address }}
+
+</p>
+
+<div class="detail-row">
+
+<span class="detail-title">
+
+Order Status
+
+</span>
+
+<span>
+
+{% if order.order_status == "Pending" %}
+
+<span class="badge bg-warning text-dark fs-6">
+
+⏳ Pending
+
+</span>
+
+{% elif order.order_status == "Shipped" %}
+
+<span class="badge bg-primary fs-6">
+
+🚚 Shipped
+
+</span>
+
+{% elif order.order_status == "Delivered" %}
+
+<span class="badge bg-success fs-6">
+
+✅ Delivered
+
+</span>
+
+{% elif order.order_status == "Cancelled" %}
+
+<span class="badge bg-danger fs-6">
+
+❌ Cancelled
+
+</span>
+
+{% else %}
+
+<span class="badge bg-secondary fs-6">
+
+{{ order.order_status }}
+
+</span>
+
+{% endif %}
+
+</span>
+
+</div>
+
+<div class="alert alert-info mt-4 mb-0">
+
+📦 Your order status will automatically update as it progresses.
+
+</div>
+
+</div>
+
+</div>
+
+{% endif %}
+
+<div class="text-center mt-4">
+
+<a
+href="/"
+class="btn btn-success btn-lg rounded-3 px-4">
+
+🏠 Back to Home
+
+</a>
+
+</div>
+
+</div>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+
+<h5 class="mb-2">
+
+🛍 NITHARWAL STORE
+
+</h5>
+
+<p class="mb-1">
+
+Fashion for Everyone
+
+</p>
+
+<small>
+
+© 2026 NITHARWAL STORE<br>
+
+Designed & Developed by <b>Vijay Nitharwal</b>
+
+</small>
 
 </footer>
 
 </body>
+
 </html>

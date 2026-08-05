@@ -1,37 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Payment</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        body{
+            background:#f5f7fb;
+            font-family:'Poppins',sans-serif;
+        }
+
+        .payment-container{
+            max-width:700px;
+            margin:auto;
+            padding:20px 12px 40px;
+        }
+
+        .page-title{
+            text-align:center;
+            font-weight:700;
+            margin-bottom:25px;
+        }
+
+        .payment-card{
+            border:none;
+            border-radius:18px;
+            overflow:hidden;
+            box-shadow:0 8px 25px rgba(0,0,0,.08);
+            margin-bottom:20px;
+        }
+
+        .payment-card .card-header{
+            background:#0d6efd;
+            color:white;
+            font-weight:600;
+            font-size:17px;
+            padding:14px 18px;
+        }
+
+        .payment-card .card-body{
+            padding:18px;
+        }
+
+        .address-name{
+            font-size:20px;
+            font-weight:700;
+            margin-bottom:5px;
+        }
+
+        .address-phone{
+            color:#555;
+            margin-bottom:8px;
+        }
+
+        .address-text{
+            color:#666;
+            line-height:1.6;
+        }
+
+        .product-item{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:12px 0;
+            border-bottom:1px solid #eee;
+        }
+
+        .product-item:last-child{
+            border-bottom:none;
+        }
+
+        .product-name{
+            font-weight:600;
+        }
+
+        .product-qty{
+            color:#666;
+            font-size:14px;
+        }
+
+        .product-price{
+            font-weight:700;
+            color:#198754;
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-4 mb-5">
+<div class="payment-container">
 
-    <h2 class="mb-4">Payment</h2>
+    <h2 class="page-title">
+        💳 Payment
+    </h2>
 
     <!-- Delivery Address -->
 
-    <div class="card mb-4">
+    <div class="card payment-card">
 
         <div class="card-header">
-            <b>Delivery Address</b>
+            📍 Delivery Address
         </div>
 
         <div class="card-body">
 
-            <h5>{{ checkout_data.customer_name }}</h5>
+            <div class="address-name">
+                {{ checkout_data.customer_name }}
+            </div>
 
-            <p class="mb-1">
-                {{ checkout_data.customer_phone }}
-            </p>
+            <div class="address-phone">
+                📞 {{ checkout_data.customer_phone }}
+            </div>
 
-            <p class="mb-0">
+            <div class="address-text">
                 {{ checkout_data.address }}
-            </p>
+            </div>
 
         </div>
 
@@ -39,31 +135,31 @@
 
     <!-- Products -->
 
-    <div class="card mb-4">
+    <div class="card payment-card">
 
         <div class="card-header">
-            <b>Products ({{ total_products }})</b>
+            🛍 Products ({{ total_products }})
         </div>
 
         <div class="card-body">
 
             {% for item in cart_products %}
 
-            <div class="d-flex justify-content-between mb-3">
+            <div class="product-item">
 
                 <div>
 
-                    <strong>
+                    <div class="product-name">
                         {{ item.product.name }}
-                    </strong>
+                    </div>
 
-                    <br>
-
-                    Qty : {{ item.quantity }}
+                    <div class="product-qty">
+                        Qty : {{ item.quantity }}
+                    </div>
 
                 </div>
 
-                <div>
+                <div class="product-price">
 
                     ₹{{ item.product.price * item.quantity }}
 
@@ -79,53 +175,45 @@
 
     <!-- Price Details -->
 
-    <div class="card mb-4">
+    <div class="card payment-card">
 
         <div class="card-header">
-            <b>Price Details</b>
+            💰 Price Details
         </div>
 
         <div class="card-body">
 
-            <div class="d-flex justify-content-between">
-
+            <div class="d-flex justify-content-between mb-2">
                 <span>Total Products</span>
-
-                <span>{{ total_products }}</span>
-
+                <strong>{{ total_products }}</strong>
             </div>
 
-            <div class="d-flex justify-content-between">
-
+            <div class="d-flex justify-content-between mb-2">
                 <span>Total Quantity</span>
-
-                <span>{{ total_quantity }}</span>
-
+                <strong>{{ total_quantity }}</strong>
             </div>
 
-            <div class="d-flex justify-content-between mt-3">
-
+            <div class="d-flex justify-content-between mb-2">
                 <span>Products Total</span>
-
-                <span>₹{{ subtotal }}</span>
-
+                <strong>₹{{ subtotal }}</strong>
             </div>
 
-            <div class="d-flex justify-content-between">
-
-                <span>Delivery Charge</span>
-
-                <span>₹{{ delivery_charge }}</span>
-
+            <div class="d-flex justify-content-between mb-3">
+                <span>🚚 Delivery Charge</span>
+                <strong class="text-success">₹{{ delivery_charge }}</strong>
             </div>
 
             <hr>
 
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
 
-                <h5>Total Payable</h5>
+                <h4 class="mb-0 fw-bold">
+                    Total Payable
+                </h4>
 
-                <h5>₹{{ grand_total }}</h5>
+                <h4 class="mb-0 text-success fw-bold">
+                    ₹{{ grand_total }}
+                </h4>
 
             </div>
 
@@ -135,39 +223,46 @@
 
     <!-- Payment Method -->
 
-    <form method="POST" action="{{ url_for('cart.process_payment') }}">
+    <form method="POST"
+          action="{{ url_for('cart.process_payment') }}">
 
-        <div class="card mb-4">
+        <div class="card payment-card">
 
             <div class="card-header">
-                <b>Select Payment Method</b>
+                💳 Select Payment Method
             </div>
 
             <div class="card-body">
 
-                <div class="form-check">
+                <div class="form-check border rounded p-3 mb-3">
 
-                    <input class="form-check-input"
-                           type="radio"
-                           name="payment_method"
-                           value="COD"
-                           checked>
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="payment_method"
+                        value="COD"
+                        checked>
 
-                    <label class="form-check-label">
+                    <label class="form-check-label fw-semibold ms-2">
+
                         Cash on Delivery
+
                     </label>
 
                 </div>
 
-                <div class="form-check mt-3">
+                <div class="form-check border rounded p-3">
 
-                    <input class="form-check-input"
-                           type="radio"
-                           name="payment_method"
-                           value="Razorpay">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="payment_method"
+                        value="Razorpay">
 
-                    <label class="form-check-label">
+                    <label class="form-check-label fw-semibold ms-2">
+
                         Razorpay (UPI / Cards / Net Banking)
+
                     </label>
 
                 </div>
@@ -176,11 +271,19 @@
 
         </div>
 
-        <button class="btn btn-success w-100 btn-lg">
+        <button
+            class="btn btn-success btn-lg w-100 rounded-3 mb-3">
 
-            Continue
+            Continue →
 
         </button>
+
+        <a href="/cart"
+           class="btn btn-outline-secondary w-100 rounded-3">
+
+            ← Back to Cart
+
+        </a>
 
     </form>
 
