@@ -13,88 +13,400 @@
 
     <div class="main-content">
 
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-4 fade-in">
 
-    <h1 class="mb-4">
-        📊 Sales Reports
-    </h1>
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
 
-    <div class="row mb-4">
+<div>
 
-        <div class="col-md-6">
+<h2 class="fw-bold mb-1">
 
-            <div class="card shadow">
+📊 Sales Reports
 
-                <div class="card-body text-center">
+</h2>
 
-                    <h4>Total Sales</h4>
+<p class="text-muted mb-0">
 
-                    <h2 class="text-success">
-                        ₹{{ total_sales }}
-                    </h2>
+Business Analytics Dashboard
 
-                </div>
+</p>
+
+</div>
+
+</div>
+
+<div class="row g-4 mb-4">
+
+<div class="col-lg-3 col-sm-6">
+
+<div class="dashboard-card bg-green">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<small>Total Sales</small>
+
+<h3 class="mt-2">
+
+₹{{ total_sales }}
+
+</h3>
+
+</div>
+
+<div style="font-size:48px;">
+
+💰
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-sm-6">
+
+<div class="dashboard-card bg-blue">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<small>Total Orders</small>
+
+<h3 class="mt-2">
+
+{{ total_orders }}
+
+</h3>
+
+</div>
+
+<div style="font-size:48px;">
+
+📦
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-sm-6">
+
+<div class="dashboard-card bg-purple">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<small>Average Order</small>
+
+<h3 class="mt-2">
+
+₹{{ (total_sales / total_orders)|round(2) if total_orders else 0 }}
+
+</h3>
+
+</div>
+
+<div style="font-size:48px;">
+
+📈
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-sm-6">
+
+<div class="dashboard-card bg-orange">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<small>Records</small>
+
+<h3 class="mt-2">
+
+{{ orders|length }}
+
+</h3>
+
+</div>
+
+<div style="font-size:48px;">
+
+📋
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-body">
+
+<div class="row g-3">
+
+<div class="col-lg-8">
+
+<input
+type="text"
+id="reportSearch"
+class="form-control"
+placeholder="🔍 Search by Order Number or Customer">
+
+</div>
+
+<div class="col-lg-4">
+
+<button
+class="btn btn-primary w-100"
+onclick="filterReports()">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card shadow">
+
+<div class="card-header d-flex justify-content-between">
+
+<span class="fw-bold">
+
+📋 Sales Records
+
+</span>
+
+<span class="badge bg-success">
+
+{{ orders|length }} Orders
+
+</span>
+
+</div>
+
+<div class="card-body">
+
+<div class="table-responsive">
+
+        <table class="table table-hover align-middle" id="reportsTable">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>Order No.</th>
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Status</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for order in orders %}
+
+    <tr>
+
+        <td>
+
+            <strong>
+
+                #{{ order.order_number }}
+
+            </strong>
+
+        </td>
+
+        <td>
+
+            <div>
+
+                <strong>
+
+                    {{ order.customer_name }}
+
+                </strong>
 
             </div>
 
-        </div>
+        </td>
 
-        <div class="col-md-6">
+        <td>
 
-            <div class="card shadow">
+            <span class="fw-bold text-success">
 
-                <div class="card-body text-center">
+                ₹{{ order.grand_total }}
 
-                    <h4>Total Orders</h4>
+            </span>
 
-                    <h2 class="text-primary">
-                        {{ total_orders }}
-                    </h2>
+        </td>
 
-                </div>
+        <td>
 
-            </div>
+            {% if order.order_status == "Pending" %}
 
-        </div>
+            <span class="badge bg-warning text-dark">
 
+                ⏳ Pending
+
+            </span>
+
+            {% elif order.order_status == "Confirmed" %}
+
+            <span class="badge bg-info">
+
+                ✔ Confirmed
+
+            </span>
+
+            {% elif order.order_status == "Shipped" %}
+
+            <span class="badge bg-primary">
+
+                🚚 Shipped
+
+            </span>
+
+            {% elif order.order_status == "Delivered" %}
+
+            <span class="badge bg-success">
+
+                ✅ Delivered
+
+            </span>
+
+            {% elif order.order_status == "Cancelled" %}
+
+            <span class="badge bg-danger">
+
+                ❌ Cancelled
+
+            </span>
+
+            {% else %}
+
+            <span class="badge bg-secondary">
+
+                {{ order.order_status }}
+
+            </span>
+
+            {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% if orders|length == 0 %}
+
+<div class="text-center py-5">
+
+    <div style="font-size:70px;">
+        📊
     </div>
 
-    <table class="table table-striped">
+    <h3 class="mt-3 text-muted">
 
-        <thead class="table-dark">
-            <tr>
-                <th>Order No</th>
-                <th>Customer</th>
-                <th>Amount</th>
-                <th>Status</th>
-            </tr>
-        </thead>
+        No Sales Records Found
 
-        <tbody>
+    </h3>
 
-            {% for order in orders %}
+    <p class="text-secondary">
 
-            <tr>
+        Sales reports will appear here after customers place orders.
 
-                <td>{{ order.order_number }}</td>
+    </p>
 
-                <td>{{ order.customer_name }}</td>
+</div>
 
-                <td>₹{{ order.grand_total }}</td>
+{% endif %}
 
-                <td>{{ order.order_status }}</td>
+</div>
 
-            </tr>
+</div>
 
-            {% endfor %}
+</div>
 
-        </tbody>
-
-    </table>
+</div>
 
     </div>
 
 </div>
+
+<script>
+
+function filterReports(){
+
+    let search =
+    document.getElementById("reportSearch")
+    .value.toLowerCase();
+
+    let rows =
+    document.querySelectorAll("#reportsTable tbody tr");
+
+    rows.forEach(function(row){
+
+        let orderNumber =
+        row.cells[0].innerText.toLowerCase();
+
+        let customer =
+        row.cells[1].innerText.toLowerCase();
+
+        let show =
+            orderNumber.includes(search) ||
+            customer.includes(search);
+
+        row.style.display =
+            show ? "" : "none";
+
+    });
+
+}
+
+document
+.getElementById("reportSearch")
+.addEventListener("keyup",filterReports);
+
+</script>
+
+</body>
+
+</html>
 
 </body>
 </html>

@@ -1,84 +1,265 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Customers</title>
+<html lang="en">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-          <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin.css') }}">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Customers</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/admin.css') }}">
+
 </head>
 
 <body>
 
-{% include 'admin/sidebar.html' %}
+{% include "admin/sidebar.html" %}
 
 <div class="main-content">
 
-    <div class="container-fluid mt-4">
+<div class="container-fluid mt-4 fade-in">
 
-    <h2 class="mb-4">
-        👥 Customer Management
-    </h2>
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
 
-    <form method="GET" class="mb-4">
+<div>
 
-    <div class="input-group">
+<h2 class="fw-bold mb-1">
 
-        <input
-            type="text"
-            name="search"
-            class="form-control"
-            placeholder="Search customer name..."
-            value="{{ search }}"
-        >
+👥 Customer Management
 
-        <button class="btn btn-primary">
-            Search
-        </button>
+</h2>
 
-    </div>
+<p class="text-muted">
 
-</form>
+Manage your customers
 
-    <table class="table table-bordered table-striped">
-
-        <thead class="table-dark">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>City</th>
-                <th>Total Order</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            {% for customer in customers %}
-
-            <tr>
-                <td>{{ customer.customer_name }}</td>
-                <td>{{ customer.customer_email }}</td>
-                <td>{{ customer.customer_phone }}</td>
-                <td>{{ customer.city }}</td>
-                <td>₹{{ customer.grand_total }}</td>
-                <td>
-    <a href="/admin/customer/{{ customer.id }}"
-       class="btn btn-primary btn-sm">
-       View
-    </a>
-</td>
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
-
-    </table>
+</p>
 
 </div>
 
+<span class="badge bg-primary fs-6">
+
+{{ customers|length }} Customers
+
+</span>
+
+</div>
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-body">
+
+<form method="GET">
+
+<div class="row g-3">
+
+<div class="col-lg-10">
+
+<input
+type="text"
+name="search"
+class="form-control"
+placeholder="🔍 Search customer by name or email..."
+value="{{ search }}">
+
+</div>
+
+<div class="col-lg-2">
+
+<button
+class="btn btn-primary w-100">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="card shadow">
+
+<div class="card-header d-flex justify-content-between">
+
+<span class="fw-bold">
+
+👥 Customers List
+
+</span>
+
+<span class="badge bg-success">
+
+{{ customers|length }} Records
+
+</span>
+
+</div>
+
+<div class="card-body">
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Phone</th>
+
+<th>City</th>
+
+<th>Total Orders</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for customer in customers %}
+
+<tr>
+
+<td>
+
+<strong>
+
+👤 {{ customer.customer_name }}
+
+</strong>
+
+</td>
+
+<td>
+
+{{ customer.customer_email }}
+
+</td>
+
+<td>
+
+{{ customer.customer_phone }}
+
+</td>
+
+<td>
+
+{{ customer.city }}
+
+</td>
+
+<td>
+
+<span class="fw-bold text-success">
+
+₹{{ customer.grand_total }}
+
+</span>
+
+</td>
+
+<td>
+
+<a
+href="/admin/customer/{{ customer.id }}"
+class="btn btn-primary btn-sm">
+
+👁 View
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+{% if customers|length == 0 %}
+
+<tr>
+
+<td colspan="6" class="text-center py-5">
+
+<div style="font-size:60px;">
+
+👥
+
+</div>
+
+<h4 class="text-muted mt-3">
+
+No Customers Found
+
+</h4>
+
+<p class="text-secondary">
+
+Customers will appear here after placing orders.
+
+</p>
+
+</td>
+
+</tr>
+
+{% endif %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<footer class="bg-dark text-white text-center py-4 mt-5 rounded">
+
+<h5 class="mb-2">
+
+🛍️ NITHARWAL STORE
+
+</h5>
+
+<p class="mb-1">
+
+Admin Dashboard
+
+</p>
+
+<small>
+
+© 2026 NITHARWAL STORE<br>
+
+Designed & Developed by <strong>Vijay Nitharwal</strong>
+
+</small>
+
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

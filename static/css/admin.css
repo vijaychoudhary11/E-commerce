@@ -1,89 +1,330 @@
-body{
-    margin: 0;
-    background: #f5f7fb;
+/* ==========================
+   ADMIN PANEL - PART 1
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
+body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:#f5f7fb;
+    color:#1e293b;
+}
+
+/* ==========================
+   SIDEBAR
+========================== */
 
 .sidebar{
-    position: fixed;
+    position:fixed;
     left:0;
     top:0;
-    width:260px;
+    width:270px;
     height:100vh;
-    background:#1e293b;
-    color: white;
-    padding-top:20px;
-    overflow-y: auto;
-    z-index: 1000;
+    background:linear-gradient(180deg,#0f172a,#1e293b);
+    color:#fff;
+    overflow-y:auto;
+    z-index:1000;
+    box-shadow:4px 0 20px rgba(0,0,0,.15);
 }
 
-.sidebar .logo{
-    color:white;
+.sidebar-header{
+    padding:30px 20px;
     text-align:center;
-    margin-bottom:30px;
+    border-bottom:1px solid rgba(255,255,255,.1);
 }
 
-.sidebar a{
-    display:block;
-    color:white;
+.logo{
+    font-size:24px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:8px;
+}
+
+.logo-subtitle{
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+/* ==========================
+   SIDEBAR MENU
+========================== */
+
+.sidebar-menu{
+    padding:20px 12px;
+}
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
     text-decoration:none;
-    padding:12px 20px;
+    color:#e2e8f0;
+    padding:14px 18px;
+    margin-bottom:8px;
+    border-radius:12px;
+    transition:.3s;
+    font-size:16px;
+    font-weight:500;
 }
 
-.sidebar a:hover{
-    background:#334155;
-}
-
-.main-content{
-    margin-left:260px;
-    padding:30px;
-}
-
-.sidebar a{
-    display:block;
-    color:white;
-    text-decoration:none;
-    padding:12px 20px;
-    margin:5px 10px;
-    border-radius:8px;
-    transition:0.3s;
-}
-
-.sidebar a:hover{
+.sidebar-link:hover{
     background:#2563eb;
-    transform:translateX(5px);
+    color:#fff;
+    transform:translateX(6px);
 }
 
-.sidebar a.active{
+.sidebar-link.active{
     background:#2563eb;
+    color:#fff;
 }
+
+/* ==========================
+   SIDEBAR FOOTER
+========================== */
 
 .sidebar-footer{
     position:absolute;
     bottom:20px;
-    left:20px;
+    width:100%;
+    text-align:center;
     color:#94a3b8;
-    font-size:12px;
+    padding:0 15px;
 }
 
-/* ===========================
-   Responsive Admin Panel
-=========================== */
+.sidebar-footer hr{
+    border-color:rgba(255,255,255,.1);
+}
+
+/* ==========================
+   MAIN CONTENT
+========================== */
+
+.main-content{
+    margin-left:270px;
+    padding:30px;
+    min-height:100vh;
+    transition:.3s;
+}
+
+/* ==========================
+   MENU BUTTON
+========================== */
 
 .menu-toggle{
     display:none;
+    position:fixed;
+    top:15px;
+    left:15px;
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+    z-index:2001;
+    box-shadow:0 5px 15px rgba(37,99,235,.35);
+    transition:.3s;
 }
+
+.menu-toggle:hover{
+    transform:scale(1.05);
+}
+
+/* ==========================
+   CARDS
+========================== */
+
+.card{
+    border:none;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    transition:.3s;
+    overflow:hidden;
+    background:#fff;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+.card-header{
+    background:#fff;
+    border-bottom:1px solid #e5e7eb;
+    font-weight:700;
+    font-size:18px;
+    padding:18px 22px;
+}
+
+.card-body{
+    padding:22px;
+}
+
+/* ==========================
+   TABLES
+========================== */
+
+.table{
+    margin-bottom:0;
+    vertical-align:middle;
+}
+
+.table thead{
+    background:#0f172a;
+    color:#fff;
+}
+
+.table thead th{
+    padding:16px;
+    border:none;
+    font-size:15px;
+    font-weight:600;
+}
+
+.table tbody td{
+    padding:16px;
+    vertical-align:middle;
+}
+
+.table-hover tbody tr{
+    transition:.25s;
+}
+
+.table-hover tbody tr:hover{
+    background:#f8fafc;
+}
+
+.table img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:10px;
+    border:1px solid #e5e7eb;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+.btn{
+    border-radius:10px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-success{
+    background:#16a34a;
+    border:none;
+}
+
+.btn-primary{
+    background:#2563eb;
+    border:none;
+}
+
+.btn-danger{
+    border:none;
+}
+
+.btn-warning{
+    border:none;
+}
+
+.btn-secondary{
+    border:none;
+}
+
+/* ==========================
+   FORMS
+========================== */
+
+.form-control,
+.form-select{
+    border-radius:10px;
+    min-height:46px;
+    border:1px solid #d1d5db;
+    box-shadow:none;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 .2rem rgba(37,99,235,.15);
+}
+
+textarea.form-control{
+    min-height:130px;
+}
+
+/* ==========================
+   BADGES
+========================== */
+
+.badge{
+    border-radius:20px;
+    padding:8px 12px;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* ==========================
+   PAGE TITLES
+========================== */
+
+h1{
+    font-size:30px;
+    font-weight:700;
+    color:#0f172a;
+}
+
+h2{
+    font-weight:700;
+}
+
+h3{
+    font-weight:600;
+}
+
+/* ==========================
+   SEARCH BAR
+========================== */
+
+.search-box{
+    background:#fff;
+    padding:18px;
+    border-radius:16px;
+    box-shadow:0 5px 15px rgba(0,0,0,.06);
+    margin-bottom:20px;
+}
+
+/* ==========================
+   ALERTS
+========================== */
+
+.alert{
+    border:none;
+    border-radius:14px;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
 
 @media (max-width:991px){
 
     .sidebar{
-        position:fixed;
-        left:-260px;
-        top:0;
-        width:260px;
-        height:100vh;
-        transition:0.3s;
-        z-index:2000;
+        left:-270px;
+        transition:.3s;
     }
 
     .sidebar.active{
@@ -91,40 +332,150 @@ body{
     }
 
     .main-content{
-        margin-left:0 !important;
-        padding:15px;
-        width:100%;
+        margin-left:0;
+        padding:80px 15px 20px;
     }
 
     .menu-toggle{
-        display:inline-block;
-        position:fixed;
-        top:15px;
-        left:15px;
-        z-index:2100;
-        background:#0d6efd;
-        color:#fff;
-        border:none;
-        border-radius:8px;
-        padding:8px 12px;
-        font-size:20px;
-        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .sidebar-footer{
+        position:static;
+        margin-top:40px;
+        padding-bottom:20px;
     }
 
     .table-responsive{
         overflow-x:auto;
+        border-radius:12px;
     }
 
-    table{
-        min-width:700px;
+    .table{
+        min-width:750px;
     }
 
     .card{
-        margin-bottom:15px;
+        margin-bottom:18px;
     }
 
-    img{
-        max-width:100%;
-        height:auto;
+    h1{
+        font-size:24px;
     }
+
+    .btn{
+        width:100%;
+        margin-bottom:10px;
+    }
+
+    .d-flex{
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
+
+.sidebar::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:#475569;
+    border-radius:10px;
+}
+
+.sidebar::-webkit-scrollbar-track{
+    background:#0f172a;
+}
+
+/* ==========================
+   ANIMATIONS
+========================== */
+
+.fade-in{
+    animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* ==========================
+   DASHBOARD CARDS
+========================== */
+
+.dashboard-card{
+    border-radius:18px;
+    color:#fff;
+    padding:25px;
+    margin-bottom:20px;
+    transition:.3s;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-5px);
+}
+
+.bg-blue{
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+}
+
+.bg-green{
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+}
+
+.bg-orange{
+    background:linear-gradient(135deg,#ea580c,#f97316);
+}
+
+.bg-purple{
+    background:linear-gradient(135deg,#7c3aed,#8b5cf6);
+}
+
+/* ==========================
+   IMAGE PREVIEW
+========================== */
+
+.img-preview{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+}
+
+/* ==========================
+   UTILITIES
+========================== */
+
+.shadow-soft{
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.rounded-xl{
+    border-radius:18px;
+}
+
+.text-small{
+    font-size:14px;
+}
+
+.cursor-pointer{
+    cursor:pointer;
 }

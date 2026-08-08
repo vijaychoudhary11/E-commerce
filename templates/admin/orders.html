@@ -14,92 +14,399 @@
 
 <div class="main-content">
 
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-4 fade-in">
 
-<h1 class="mb-4 text-center">
-📦 All Orders
-</h1>
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+
+<div>
+
+<h2 class="fw-bold mb-1">
+
+📦 Orders Management
+
+</h2>
+
+<p class="text-muted mb-0">
+
+Total Orders :
+
+<span class="badge bg-primary">
+
+{{ orders|length }}
+
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card mb-4 shadow-sm">
+
+<div class="card-body">
+
+<div class="row g-3">
+
+<div class="col-lg-6">
+
+<input
+type="text"
+id="searchInput"
+class="form-control"
+placeholder="🔍 Search by Order Number or Customer">
+
+</div>
+
+<div class="col-lg-3">
+
+<select
+id="statusFilter"
+class="form-select">
+
+<option value="all">
+
+All Status
+
+</option>
+
+<option value="Pending">
+
+Pending
+
+</option>
+
+<option value="Confirmed">
+
+Confirmed
+
+</option>
+
+<option value="Shipped">
+
+Shipped
+
+</option>
+
+<option value="Delivered">
+
+Delivered
+
+</option>
+
+</select>
+
+</div>
+
+<div class="col-lg-3">
+
+<button
+class="btn btn-primary w-100"
+onclick="filterOrders()">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 <div class="card shadow">
+
+<div class="card-header d-flex justify-content-between align-items-center">
+
+<span class="fw-bold">
+
+📋 Orders List
+
+</span>
+
+<span class="badge bg-success">
+
+{{ orders|length }} Orders
+
+</span>
+
+</div>
+
 <div class="card-body">
 
 <div class="table-responsive">
 
-<table class="table table-hover table-striped align-middle">
-    <tr class="table-dark">
-        <th>ID</th>
-        <th>Order Number</th>
-        <th>Customer</th>
-        <th>Phone</th>
-        <th>Total</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
+<div class="card-body">
+
+<div class="table-responsive">
+
+    <div class="card shadow">
+
+<table class="table table-hover align-middle" id="ordersTable">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>ID</th>
+            <th>Order No.</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th width="220">Actions</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
 
     {% for order in orders %}
+
     <tr>
-        <td>{{ order.id }}</td>
-        <td>{{ order.order_number }}</td>
-        <td>{{ order.customer_name }}</td>
-        <td>{{ order.customer_phone }}</td>
-        <td>₹ {{ order.grand_total }}</td>
+
+        <td>
+            <strong>#{{ order.id }}</strong>
+        </td>
+
+        <td>
+            <strong>{{ order.order_number }}</strong>
+        </td>
 
         <td>
 
-<form method="POST"
-      action="/admin/orders/update-status/{{ order.id }}">
+            <strong>
 
-    <select name="order_status"
-            class="form-select"
-            onchange="this.form.submit()">
+                {{ order.customer_name }}
 
-        <option value="Pending"
-        {% if order.order_status == "Pending" %}selected{% endif %}>
-        Pending
-        </option>
+            </strong>
 
-        <option value="Confirmed"
-        {% if order.order_status == "Confirmed" %}selected{% endif %}>
-        Confirmed
-        </option>
-
-        <option value="Shipped"
-        {% if order.order_status == "Shipped" %}selected{% endif %}>
-        Shipped
-        </option>
-
-        <option value="Delivered"
-        {% if order.order_status == "Delivered" %}selected{% endif %}>
-        Delivered
-        </option>
-
-    </select>
-
-</form>
-
-</td>
+        </td>
 
         <td>
-                <button type="submit"
-class="btn btn-success btn-sm">
-    ✓ Update
-</button>
+
+            {{ order.customer_phone }}
+
+        </td>
+
+        <td>
+
+            <span class="fw-bold text-success">
+
+                ₹{{ order.grand_total }}
+
+            </span>
+
+        </td>
+
+        <td>
+
+            {% if order.order_status == "Pending" %}
+
+            <span class="badge bg-warning text-dark">
+
+                ⏳ Pending
+
+            </span>
+
+            {% elif order.order_status == "Confirmed" %}
+
+            <span class="badge bg-info">
+
+                ✔ Confirmed
+
+            </span>
+
+            {% elif order.order_status == "Shipped" %}
+
+            <span class="badge bg-primary">
+
+                🚚 Shipped
+
+            </span>
+
+            {% elif order.order_status == "Delivered" %}
+
+            <span class="badge bg-success">
+
+                ✅ Delivered
+
+            </span>
+
+            {% elif order.order_status == "Cancelled" %}
+
+            <span class="badge bg-danger">
+
+                ❌ Cancelled
+
+            </span>
+
+            {% else %}
+
+            <span class="badge bg-secondary">
+
+                {{ order.order_status }}
+
+            </span>
+
+            {% endif %}
+
+            <form
+                method="POST"
+                action="/admin/orders/update-status/{{ order.id }}"
+                class="mt-2">
+
+                <select
+                    name="order_status"
+                    class="form-select form-select-sm"
+                    onchange="this.form.submit()">
+
+                    <option value="Pending"
+                    {% if order.order_status=="Pending" %}selected{% endif %}>
+                        Pending
+                    </option>
+
+                    <option value="Confirmed"
+                    {% if order.order_status=="Confirmed" %}selected{% endif %}>
+                        Confirmed
+                    </option>
+
+                    <option value="Shipped"
+                    {% if order.order_status=="Shipped" %}selected{% endif %}>
+                        Shipped
+                    </option>
+
+                    <option value="Delivered"
+                    {% if order.order_status=="Delivered" %}selected{% endif %}>
+                        Delivered
+                    </option>
+
+                    <option value="Cancelled"
+                    {% if order.order_status=="Cancelled" %}selected{% endif %}>
+                        Cancelled
+                    </option>
+
+                </select>
+
             </form>
 
-            <a href="{{ url_for('admin.order_details', order_id=order.id) }}"
-class="btn btn-info btn-sm">
-    👁 View
-</a>
         </td>
+
+        <td>
+
+            <div class="d-flex gap-2">
+
+                <a
+                href="{{ url_for('admin.order_details', order_id=order.id) }}"
+                class="btn btn-info btn-sm">
+
+                    👁 View
+
+                </a>
+
+            </div>
+
+        </td>
+
     </tr>
+
     {% endfor %}
+
+    </tbody>
+
 </table>
 
+{% if orders|length == 0 %}
+
+<div class="text-center py-5">
+
+    <h2 class="text-muted">
+        📦 No Orders Found
+    </h2>
+
+    <p class="text-secondary">
+        Orders will appear here when customers place them.
+    </p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 </div>
 </div>
 
 </div>
+
+<script>
+
+function filterOrders(){
+
+    let search =
+    document.getElementById("searchInput")
+    .value.toLowerCase();
+
+    let status =
+    document.getElementById("statusFilter")
+    .value.toLowerCase();
+
+    let rows =
+    document.querySelectorAll("#ordersTable tbody tr");
+
+    rows.forEach(function(row){
+
+        let orderNumber =
+        row.cells[1].innerText.toLowerCase();
+
+        let customer =
+        row.cells[2].innerText.toLowerCase();
+
+        let orderStatus =
+        row.cells[5].innerText.toLowerCase();
+
+        let show =
+            orderNumber.includes(search) ||
+            customer.includes(search);
+
+        if(status!="all"){
+
+            show =
+                show &&
+                orderStatus.includes(status);
+
+        }
+
+        row.style.display =
+            show ? "" : "none";
+
+    });
+
+}
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",filterOrders);
+
+document
+.getElementById("statusFilter")
+.addEventListener("change",filterOrders);
+
+</script>
+
+</body>
+
+</html>
 
 </body>
 </html>

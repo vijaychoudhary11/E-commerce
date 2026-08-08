@@ -1,133 +1,310 @@
-{% extends "admin/admin_base.html" %}
+<div class="container-fluid fade-in">
 
-{% block title %}
-Dashboard
-{% endblock %}
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
 
-{% block content %}
+        <div>
 
-<!-- Dashboard Content Yaha Hoga -->
+            <h2 class="fw-bold mb-1">
+                📊 Dashboard
+            </h2>
 
-<div class="container-fluid">
+            <p class="text-muted mb-0">
+                Welcome to the NITHARWAL STORE Admin Panel
+            </p>
 
-    <h2 class="fw-bold mb-4">
-        📊 Dashboard
-    </h2>
-
-    <div class="row g-4">
-
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card dashboard-card text-center p-3">
-                <h6>Total Products</h6>
-                <h2 class="text-primary">
-                    {{ total_products }}
-                </h2>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card dashboard-card text-center p-3">
-                <h6>Total Orders</h6>
-                <h2 class="text-success">
-                    {{ total_orders }}
-                </h2>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card dashboard-card text-center p-3">
-                <h6>Pending Orders</h6>
-                <h2 class="text-warning">
-                    {{ pending_orders }}
-                </h2>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card dashboard-card text-center p-3">
-                <h6>Total Revenue</h6>
-                <h2 class="text-danger">
-                    ₹{{ total_revenue }}
-                </h2>
-            </div>
         </div>
 
     </div>
 
-    <div class="card shadow mt-5">
+    <div class="row g-4">
 
-        <div class="card-header bg-primary text-white">
-            📈 Monthly Revenue Analytics
+        <!-- Total Products -->
+
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="dashboard-card bg-blue">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small>Total Products</small>
+
+                        <h2 class="mt-2 mb-0">
+
+                            {{ total_products }}
+
+                        </h2>
+
+                    </div>
+
+                    <div style="font-size:55px;">
+                        📦
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Orders -->
+
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="dashboard-card bg-green">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small>Total Orders</small>
+
+                        <h2 class="mt-2 mb-0">
+
+                            {{ total_orders }}
+
+                        </h2>
+
+                    </div>
+
+                    <div style="font-size:55px;">
+                        🛒
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Pending -->
+
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="dashboard-card bg-orange">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small>Pending Orders</small>
+
+                        <h2 class="mt-2 mb-0">
+
+                            {{ pending_orders }}
+
+                        </h2>
+
+                    </div>
+
+                    <div style="font-size:55px;">
+                        ⏳
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Revenue -->
+
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="dashboard-card bg-purple">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small>Total Revenue</small>
+
+                        <h2 class="mt-2 mb-0">
+
+                            ₹{{ total_revenue }}
+
+                        </h2>
+
+                    </div>
+
+                    <div style="font-size:55px;">
+                        💰
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Revenue Chart -->
+
+    <div class="card mt-5">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <span class="fw-bold">
+
+                📈 Monthly Revenue Analytics
+
+            </span>
+
+            <span class="badge bg-primary">
+
+                Last 12 Months
+
+            </span>
+
         </div>
 
         <div class="card-body">
 
-            <canvas id="revenueChart"></canvas>
+            <canvas id="revenueChart" style="max-height:350px;"></canvas>
 
         </div>
 
     </div>
 
-    <div class="card shadow mt-5">
+    <!-- Recent Orders -->
 
-        <div class="card-header bg-dark text-white">
+<div class="card mt-5">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <span class="fw-bold">
             📋 Recent Orders
-        </div>
+        </span>
 
-        <div class="card-body table-responsive">
+        <span class="badge bg-success">
 
-            <table class="table table-hover align-middle">
+            {{ recent_orders|length }} Orders
 
-                <thead>
-
-                    <tr>
-
-                        <th>Order No</th>
-                        <th>Customer</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th></th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                {% for order in recent_orders %}
-
-                    <tr>
-
-                        <td>{{ order.order_number }}</td>
-
-                        <td>{{ order.customer_name }}</td>
-
-                        <td>₹{{ order.grand_total }}</td>
-
-                        <td>{{ order.order_status }}</td>
-
-                        <td>
-
-                            <a href="/admin/orders/{{ order.id }}"
-                               class="btn btn-primary btn-sm">
-
-                                View
-
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                {% endfor %}
-
-                </tbody>
-
-            </table>
-
-        </div>
+        </span>
 
     </div>
+
+    <div class="card-body table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Order No</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for order in recent_orders %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>
+
+                            #{{ order.order_number }}
+
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        {{ order.customer_name }}
+
+                    </td>
+
+                    <td>
+
+                        <span class="fw-bold text-success">
+
+                            ₹{{ order.grand_total }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {% if order.order_status == "Pending" %}
+
+                        <span class="badge bg-warning text-dark">
+
+                            ⏳ Pending
+
+                        </span>
+
+                        {% elif order.order_status == "Shipped" %}
+
+                        <span class="badge bg-primary">
+
+                            🚚 Shipped
+
+                        </span>
+
+                        {% elif order.order_status == "Delivered" %}
+
+                        <span class="badge bg-success">
+
+                            ✅ Delivered
+
+                        </span>
+
+                        {% elif order.order_status == "Cancelled" %}
+
+                        <span class="badge bg-danger">
+
+                            ❌ Cancelled
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-secondary">
+
+                            {{ order.order_status }}
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <a
+                        href="{{ url_for('admin.order_detail', id=order.id) }}"
+                        class="btn btn-primary btn-sm">
+
+                            View
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -138,27 +315,67 @@ Dashboard
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-const ctx = document.getElementById('revenueChart');
+
+const ctx=document.getElementById("revenueChart");
 
 new Chart(ctx,{
-    type:'bar',
-    data:{
-        labels:{{ months|tojson }},
-        datasets:[{
-            label:'Revenue (₹)',
-            data:{{ sales|tojson }},
-            borderWidth:2
-        }]
-    },
-    options:{
-        responsive:true,
-        scales:{
-            y:{
-                beginAtZero:true
-            }
-        }
-    }
+
+type:"line",
+
+data:{
+
+labels:{{ months|tojson }},
+
+datasets:[{
+
+label:"Revenue (₹)",
+
+data:{{ sales|tojson }},
+
+fill:true,
+
+tension:0.4,
+
+borderWidth:3,
+
+pointRadius:5,
+
+pointHoverRadius:7
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false,
+
+plugins:{
+
+legend:{
+
+display:true
+
+}
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true
+
+}
+
+}
+
+}
+
 });
+
 </script>
 
 {% endblock %}

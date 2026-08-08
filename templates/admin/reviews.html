@@ -14,13 +14,89 @@
 
 {% include 'admin/sidebar.html' %}
 
-<div class="main-content">
+<div class="container-fluid mt-4 fade-in">
 
-    <div class="container mt-4">
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>⭐ Product Reviews</h2>
-        </div>
+<div>
+
+<h2 class="fw-bold mb-1">
+
+⭐ Product Reviews
+
+</h2>
+
+<p class="text-muted mb-0">
+
+Total Reviews :
+
+<span class="badge bg-primary">
+
+{{ reviews|length }}
+
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card mb-4 shadow-sm">
+
+<div class="card-body">
+
+<div class="row g-3">
+
+<div class="col-lg-9">
+
+<input
+type="text"
+id="reviewSearch"
+class="form-control"
+placeholder="🔍 Search by User or Product">
+
+</div>
+
+<div class="col-lg-3">
+
+<button
+class="btn btn-primary w-100"
+onclick="filterReviews()">
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card shadow">
+
+<div class="card-header d-flex justify-content-between">
+
+<span class="fw-bold">
+
+⭐ Reviews List
+
+</span>
+
+<span class="badge bg-success">
+
+{{ reviews|length }} Reviews
+
+</span>
+
+</div>
+
+<div class="card-body">
+
+<div class="table-responsive">
 
         <div class="card shadow">
 
@@ -28,61 +104,156 @@
 
                 <div class="table-responsive">
 
-                    <table class="table table-striped table-hover align-middle">
+                    <table class="table table-hover align-middle" id="reviewsTable">
 
-                        <thead class="table-dark">
-                        <tr>
-                            <th>User</th>
-                            <th>Product</th>
-                            <th>Rating</th>
-                            <th>Comment</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+    <thead class="table-dark">
 
-                        <tbody>
+        <tr>
 
-                        {% for review in reviews %}
+            <th>User</th>
+            <th>Product</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th width="120">Action</th>
 
-                        <tr>
+        </tr>
 
-                            <td>{{ review.user.name }}</td>
+    </thead>
 
-                            <td>{{ review.product.name }}</td>
+    <tbody>
 
-                            <td>
-                                ⭐ {{ review.rating }}/5
-                            </td>
+    {% for review in reviews %}
 
-                            <td>{{ review.comment }}</td>
+    <tr>
 
-                            <td>
+        <td>
 
-                                <a href="/reviews/delete/{{ review.id }}"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Delete this review?')">
+            <strong>
 
-                                    🗑 Delete
+                👤 {{ review.user.name }}
 
-                                </a>
+            </strong>
 
-                            </td>
+        </td>
 
-                        </tr>
+        <td>
 
-                        {% endfor %}
+            <strong class="text-primary">
 
-                        {% if reviews|length == 0 %}
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">
-                                No Reviews Found
-                            </td>
-                        </tr>
-                        {% endif %}
+                📦 {{ review.product.name }}
 
-                        </tbody>
+            </strong>
 
-                    </table>
+        </td>
+
+        <td>
+
+            {% if review.rating == 5 %}
+
+            <span class="badge bg-success">
+
+                ⭐⭐⭐⭐⭐
+
+            </span>
+
+            {% elif review.rating == 4 %}
+
+            <span class="badge bg-primary">
+
+                ⭐⭐⭐⭐☆
+
+            </span>
+
+            {% elif review.rating == 3 %}
+
+            <span class="badge bg-warning text-dark">
+
+                ⭐⭐⭐☆☆
+
+            </span>
+
+            {% elif review.rating == 2 %}
+
+            <span class="badge bg-danger">
+
+                ⭐⭐☆☆☆
+
+            </span>
+
+            {% else %}
+
+            <span class="badge bg-secondary">
+
+                ⭐☆☆☆☆
+
+            </span>
+
+            {% endif %}
+
+        </td>
+
+        <td style="max-width:300px;">
+
+            <div class="text-muted">
+
+                {{ review.comment }}
+
+            </div>
+
+        </td>
+
+        <td>
+
+            <a
+            href="/reviews/delete/{{ review.id }}"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Delete this review permanently?')">
+
+                🗑 Delete
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% if reviews|length == 0 %}
+
+<div class="text-center py-5">
+
+    <div style="font-size:70px;">
+        ⭐
+    </div>
+
+    <h3 class="mt-3 text-muted">
+
+        No Reviews Found
+
+    </h3>
+
+    <p class="text-secondary">
+
+        Customer reviews will appear here after products are reviewed.
+
+    </p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
                 </div>
 
@@ -93,6 +264,46 @@
     </div>
 
 </div>
+
+<script>
+
+function filterReviews(){
+
+    let search =
+    document.getElementById("reviewSearch")
+    .value.toLowerCase();
+
+    let rows =
+    document.querySelectorAll("#reviewsTable tbody tr");
+
+    rows.forEach(function(row){
+
+        let user =
+        row.cells[0].innerText.toLowerCase();
+
+        let product =
+        row.cells[1].innerText.toLowerCase();
+
+        let show =
+            user.includes(search) ||
+            product.includes(search);
+
+        row.style.display =
+            show ? "" : "none";
+
+    });
+
+}
+
+document
+.getElementById("reviewSearch")
+.addEventListener("keyup", filterReviews);
+
+</script>
+
+</body>
+
+</html>
 
 </body>
 </html>

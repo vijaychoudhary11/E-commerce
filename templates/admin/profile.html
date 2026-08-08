@@ -1,72 +1,260 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Profile</title>
+<html lang="en">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-          <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/admin.css') }}">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Admin Profile</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/admin.css') }}">
+
+<style>
+
+.profile-card{
+    border:none;
+    border-radius:22px;
+    overflow:hidden;
+}
+
+.profile-header{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:#fff;
+    text-align:center;
+    padding:35px 20px;
+}
+
+.profile-avatar{
+    width:95px;
+    height:95px;
+    border-radius:50%;
+    background:#fff;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+    font-weight:700;
+    margin:auto;
+}
+
+.info-card{
+    background:#f8fafc;
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.info-title{
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.info-value{
+    font-size:18px;
+    font-weight:600;
+}
+
+</style>
+
 </head>
 
-<body style="background:#f4f6f9;">
-    {% include 'admin/sidebar.html' %}
+<body>
 
-<div class="container mt-5">
+{% include 'admin/sidebar.html' %}
 
-    <div class="card shadow">
+<div class="main-content">
 
-        <div class="card-header bg-dark text-white">
-            <h3>👤 Admin Profile</h3>
-        </div>
+<div class="container-fluid fade-in">
 
-        <div class="card-body">
+<div class="row justify-content-center">
 
-    <p>
-        <strong>ID:</strong>
-        {{ admin.id }}
-    </p>
+<div class="col-lg-8">
 
-    <p>
-        <strong>Username:</strong>
-        {{ admin.username }}
-    </p>
+<div class="card profile-card shadow">
 
-    <p>
-        <strong>Email:</strong>
-        {{ admin.email }}
-    </p>
+<div class="profile-header">
 
-    <p>
-        <strong>Created At:</strong>
-        {{ admin.created_at }}
-    </p>
+<div class="profile-avatar">
 
-    <p>
-        <strong>Updated At:</strong>
-        {{ admin.updated_at }}
-    </p>
-
-    <a href="/admin/edit-profile"
-   class="btn btn-primary">
-   ✏️ Edit Profile
-</a>
-
-<a href="/admin/change-password"
-   class="btn btn-warning">
-   🔑 Change Password
-</a>
-
-    <a href="/dashboard"
-       class="btn btn-primary">
-       Back Dashboard
-    </a>
+{{ admin.username[0]|upper }}
 
 </div>
 
-    </div>
+<h2 class="mt-3">
+
+{{ admin.username }}
+
+</h2>
+
+<p class="mb-0">
+
+Administrator
+
+</p>
 
 </div>
+
+<div class="card-body p-4">
+
+<div class="info-card">
+
+<div class="info-title">
+
+🆔 Admin ID
+
+</div>
+
+<div class="info-value">
+
+{{ admin.id }}
+
+</div>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-title">
+
+👤 Username
+
+</div>
+
+<div class="info-value">
+
+{{ admin.username }}
+
+</div>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-title">
+
+📧 Email
+
+</div>
+
+<div class="info-value">
+
+{{ admin.email }}
+
+</div>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-title">
+
+📅 Created At
+
+</div>
+
+<div class="info-value">
+
+{{ admin.created_at }}
+
+</div>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-title">
+
+🔄 Last Updated
+
+</div>
+
+<div class="info-value">
+
+{{ admin.updated_at }}
+
+</div>
+
+</div>
+
+<div class="d-grid gap-3 mt-4">
+
+<a
+href="/admin/edit-profile"
+class="btn btn-primary btn-lg">
+
+✏️ Edit Profile
+
+</a>
+
+<a
+href="/admin/change-password"
+class="btn btn-warning btn-lg">
+
+🔑 Change Password
+
+</a>
+
+<a
+href="{{ url_for('admin.dashboard') }}"
+class="btn btn-success btn-lg">
+
+📊 Dashboard
+
+</a>
+
+<a
+href="{{ url_for('admin.logout') }}"
+class="btn btn-danger btn-lg">
+
+🚪 Logout
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+
+<h5 class="mb-2">
+
+🛍️ NITHARWAL STORE
+
+</h5>
+
+<p class="mb-1">
+
+Admin Dashboard
+
+</p>
+
+<small>
+
+© 2026 NITHARWAL STORE<br>
+Designed & Developed by <b>Vijay Nitharwal</b>
+
+</small>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

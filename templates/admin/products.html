@@ -23,78 +23,347 @@
 
 <div class="main-content">
 
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-4 fade-in">
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Header -->
 
-<h1>🛍 Products management</h1>
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
 
-<a href="/admin/product/add"
-   class="btn btn-success">
-   + Add Product
-</a>
+        <div>
 
-</div>
+            <h2 class="fw-bold mb-1">
+                📦 Products Management
+            </h2>
 
-<div class="card shadow">
+            <p class="text-muted mb-0">
+
+                Total Products :
+                <span class="badge bg-primary">
+                    {{ products|length }}
+                </span>
+
+            </p>
+
+        </div>
+
+        <a href="/admin/product/add"
+           class="btn btn-success px-4">
+
+            ➕ Add Product
+
+        </a>
+
+    </div>
+
+    <!-- Search + Filter -->
+
+    <div class="card mb-4 shadow-sm">
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-lg-5">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="form-control"
+                        placeholder="🔍 Search product by name...">
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <select
+                        id="stockFilter"
+                        class="form-select">
+
+                        <option value="all">
+                            All Stock
+                        </option>
+
+                        <option value="instock">
+                            In Stock
+                        </option>
+
+                        <option value="outstock">
+                            Out of Stock
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-lg-3">
+
+                    <button
+                        class="btn btn-primary w-100"
+                        onclick="filterProducts()">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Products Table -->
+
+    <div class="card shadow">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <span class="fw-bold">
+
+                🛍 Products List
+
+            </span>
+
+            <span class="badge bg-success">
+
+                {{ products|length }} Products
+
+            </span>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
 <div class="card-body">
 
 <div class="table-responsive">
 
-<table class="table table-hover align-middle">
+    <div class="card shadow">
 
-<tr class="table-dark">
-    <th>ID</th>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Stock</th>
-    <th>image</th>
-    <th>Actions</th>
-</tr>
+<table class="table table-hover align-middle" id="productsTable">
 
-{% for product in products %}
+    <thead class="table-dark">
 
-<tr>
-    <td>{{ product.id }}</td>
-    <td>{{ product.name }}</td>
-    <td>{{ product.price }}</td>
-    <td>
-    <span class="badge bg-success">
-        {{ product.stock }}
-    </span>
-</td>
-    <td>
-    {% if product.image_1 %}
-<img
-src="{{ product.image_1 }}"
-style="width:80px;height:80px;object-fit:cover;border-radius:10px;">
-{% else %}
-No Image
-{% endif %}
-</td>
-<td>
-    <a href="/admin/product/edit/{{ product.id }}"
-class="btn btn-primary btn-sm me-2">
-    ✏️ Edit
-</a>
+        <tr>
 
-<a href="/admin/product/delete/{{ product.id }}"
-class="btn btn-danger btn-sm">
-    🗑 Delete
-</a>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th width="180">Actions</th>
 
-</td>
-</tr>
+        </tr>
 
-{% endfor %}
+    </thead>
+
+    <tbody>
+
+    {% for product in products %}
+
+    <tr>
+
+        <td>
+
+            <strong>#{{ product.id }}</strong>
+
+        </td>
+
+        <td>
+
+            {% if product.image_1 %}
+
+            <img
+            src="{{ product.image_1 }}"
+            class="img-preview">
+
+            {% else %}
+
+            <div class="text-muted">
+
+                No Image
+
+            </div>
+
+            {% endif %}
+
+        </td>
+
+        <td>
+
+            <strong>
+
+                {{ product.name }}
+
+            </strong>
+
+        </td>
+
+        <td>
+
+            <span class="fw-bold text-success">
+
+                ₹{{ product.price }}
+
+            </span>
+
+        </td>
+
+        <td>
+
+            <span class="badge bg-primary">
+
+                {{ product.stock }}
+
+            </span>
+
+        </td>
+
+        <td>
+
+            {% if product.stock > 0 %}
+
+            <span class="badge bg-success">
+
+                ✅ In Stock
+
+            </span>
+
+            {% else %}
+
+            <span class="badge bg-danger">
+
+                ❌ Out of Stock
+
+            </span>
+
+            {% endif %}
+
+        </td>
+
+        <td>
+
+            <div class="d-flex gap-2">
+
+                <a
+                href="/admin/product/edit/{{ product.id }}"
+                class="btn btn-warning btn-sm">
+
+                    ✏ Edit
+
+                </a>
+
+                <a
+                href="/admin/product/delete/{{ product.id }}"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('Delete this product?')">
+
+                    🗑 Delete
+
+                </a>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
 
 </table>
 
+{% if products|length == 0 %}
+
+<div class="text-center py-5">
+
+    <h3 class="text-muted">
+
+        📦 No Products Found
+
+    </h3>
+
+    <p class="text-secondary">
+
+        Start by adding your first product.
+
+    </p>
+
+    <a href="/admin/product/add"
+       class="btn btn-success mt-2">
+
+        ➕ Add Product
+
+    </a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 </div>
 </div>
 
 </div>
+
+<script>
+
+function filterProducts(){
+
+    let input =
+    document.getElementById("searchInput").value.toLowerCase();
+
+    let stock =
+    document.getElementById("stockFilter").value;
+
+    let rows =
+    document.querySelectorAll("#productsTable tbody tr");
+
+    rows.forEach(function(row){
+
+        let productName =
+        row.cells[2].innerText.toLowerCase();
+
+        let stockText =
+        row.cells[5].innerText.toLowerCase();
+
+        let show =
+        productName.includes(input);
+
+        if(stock=="instock"){
+            show = show && stockText.includes("in stock");
+        }
+
+        if(stock=="outstock"){
+            show = show && stockText.includes("out of stock");
+        }
+
+        row.style.display = show ? "" : "none";
+
+    });
+
+}
+
+document.getElementById("searchInput")
+.addEventListener("keyup", filterProducts);
+
+document.getElementById("stockFilter")
+.addEventListener("change", filterProducts);
+
+</script>
 
 </body>
 </html>
